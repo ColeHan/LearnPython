@@ -1,0 +1,178 @@
+
+
+## Performance of Python Data Structures
+
+### Lists
+
+Compare four different ways we use to generate a list of *n* numbers
+
+
+> Code :
+>def test1():
+>    l = []
+>    for i in range(1000):
+>        l = l + [i]
+>
+>def test2():
+>    l = []
+>    for i in range(1000):
+>        l.append(i)
+>
+>def test3():
+>    l = [i for i in range(1000)]
+>
+>
+>def test4():
+>    l = list(range(1000))
+>
+>
+>
+># Import the timeit module
+>import timeit
+>
+># Import the Timer class defined in the module
+>from timeit import Timer
+>
+>t1 = Timer("test1()", "from __main__ import test1")
+>print "concat, %s , milliseconds" %(t1.timeit(number=1000))
+>
+>t2 = Timer("test2()", "from __main__ import test2")
+>print "append, %s , milliseconds" %(t2.timeit(number=1000))
+>
+>t3 = Timer("test3()", "from __main__ import test3")
+>print "comprehension, %s , milliseconds" %(t3.timeit(number=1000))
+>
+>t4 = Timer("test4()", "from __main__ import test4")
+>print "list range, %s , milliseconds" %(t4.timeit(number=1000))
+
+
+Big - O Efficiency of Python List Operators
+
+Operation        |   Big-O Efficiency
+-----------------| -------------------
+indexx[]         | O(1)
+index assignment | O(1)
+append           | O(1)
+pop()            | O(1)
+pop(i)           | O(n)
+insert(i, item)  | O(n)
+del operator     | O(n)
+iteration        | O(n)
+contains (in)    | O(n)
+get slice[x:y]   | O(k)
+del slice        | O(n)
+set slice        | O(n+k)
+reverse          | O(n)
+concatenate      | O(k)
+sort             | O(nlogn)
+multiply         | O(nk)
+
+EG: compare the *pop* on different loc:
+
+>code:
+>pop_zero = Timer("x.pop(0)", "from __main__ import x")
+>pop_end = Timer("x.pop()", "from __main__ import x")
+>
+>x = list(range(2000000))
+>pop_zero.timeit(number = 1000)
+>
+>x = list(range(2000000))
+>pop_end.timeit(number = 1000)
+
+
+### Dictionaries
+
+Big - O Efficiency of Python Dictionary Operations
+
+Operation    | Big-O Efficiency
+-------------|-----------------
+copy         |  O(n)
+get item     |  O(1)
+set item     |  O(1)
+delete item  |  O(1)
+contains (in)|  O(1)
+iteration    |  O(n)
+
+Compare the operation *in* for lisr and dictionary
+
+> code :
+>import timeit
+>import random
+>
+>for i in range(1000, 1000001, 20000):
+>    t = timeit.Timer("random.randrange(%d) in x"%i, "from __main__ import random, x")
+>    x = list(range(i))
+>    lst_time = t.timeit(number = 1000)
+>    x = {j:None for j in range(i)}
+>    d_time = t.timeit(number = 1000)
+>    print "%d, %10.3f , %10.3f" %(i, lst_time, d_time)
+
+
+## Basic Data Structures
+
+Linear Structures: items are added an removed in a linear structures, eg
+Stacks, queues, deques and lists
+
+### Stack
+
+an ordered collection of items where the addition of new items and the removal of existing 
+items always take place at the same end-- referred as the "top"
+
+The ordering principle is sometimes called LIFO( last-in-first-out)
+
+Stack Operation    | Stack Contents   |   Return Value
+-------------------|------------------|-------------------
+s.is_empty()       | []               | True
+s.push(4)          | [4]              | 
+s.push('dog')      | [4, 'dog']       |
+s.peek()           | [4, 'dog']       | 'dog'
+s.push(True)       | [4, 'dog', True] | 
+s.size()           | [4, 'dog', True] | 3
+s.is_empty()       | [4, 'dog', True] | False
+s.push(8.4)        | [4, 'dog ,True, 8.4] |
+s.pop()            | [4, 'dog', True] | 8.4
+s.pop()            | [4, 'dog']       | True
+s.size()           | [4, 'dog']       | 2
+
+#### The Stack Abstract Data Type
+    Stack()
+    push(item)
+    pop()
+    peek()
+    is_empty()
+    size()
+
+#### Implementing A Stack in Python
+
+>Code:
+># Completed implementation of a stack ADT
+>class Stack:
+>    def __init__(self):
+>        self.items = []
+>    
+>    def is_empty(self):
+>        return self.items == []
+>    
+>    def push(self , item):
+>        self.items.append(item)
+>    
+>    def pop(self):
+>        return self.items.pop()
+>    
+>    def peek(self):
+>        return self.items[len(self.items) -1]
+>    
+>    def size(self):
+>        return len(self.items)
+>        
+>s = Stack()
+>
+>print s.is_empty()
+>s.push(4)
+>s.push('dog')
+
+
+
+
+
+
